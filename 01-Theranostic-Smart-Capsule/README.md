@@ -84,14 +84,14 @@ Relying on a single biomarker creates dangerous false positives. For instance, i
 Furthermore, RF signals attenuate heavily through human tissue and water, making cloud-dependent decision-making unsafe due to latency and packet loss. **BioTarget-AI** runs a quantized **Random Forest / Lightweight Neural Network** directly on the **ESP32** using **TensorFlow Lite for Microcontrollers (TinyML)**:
 
 1. **Input Feature Vector ($X$):**
-   $$X = [\Delta T_{\text{norm}}, R_{\text{ratio}}, G_{\text{ratio}}, B_{\text{ratio}}, B_{\text{mag}}]$$
+   Input Feature Vector: X = [Temp_norm, R_ratio, G_ratio, B_ratio, B_mag]
 2. **Model Output:**
    Instead of a rigid binary flag, the model outputs a continuous probability distribution over tissue states:
    - `Healthy_Tissue`: $0.04$
    - `Systemic_Noise_Fever`: $0.02$
    - `Target_Inflammation`: **$0.94$ (94% Confidence)**
 3. **Actuation Gate:**
-   The micro-pump triggers **if and only if** $P(\text{Target\_Inflammation}) \ge 0.90$ across $N=3$ consecutive sampling windows (debouncing transient sensor noise).
+   The micro-pump triggers **if and only if** P(Target Inflammation) >= 0.90 across N = 3 consecutive sampling windows (debouncing transient sensor noise).
 
 ---
 
